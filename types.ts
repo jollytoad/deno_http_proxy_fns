@@ -2,7 +2,7 @@ import type { HttpMethod } from "https://deno.land/std@0.192.0/http/method.ts";
 import type {
   RoutePattern,
   Skip,
-} from "https://deno.land/x/http_fns@v0.0.15/types.ts";
+} from "https://deno.land/x/http_fns@v0.0.16/types.ts";
 
 export type { HttpMethod, RoutePattern, Skip };
 

@@ -1,5 +1,5 @@
-import { byPattern } from "https://deno.land/x/http_fns@v0.0.15/pattern.ts";
-import { forbidden } from "https://deno.land/x/http_fns@v0.0.15/response.ts";
+import { byPattern } from "https://deno.land/x/http_fns@v0.0.16/pattern.ts";
+import { forbidden } from "https://deno.land/x/http_fns@v0.0.16/response.ts";
 import { subHeaders } from "./_internal/substitute.ts";
 import { methodApplies, roleApplies } from "./_internal/match.ts";
 import type { Auditor, Role, RouteRule, Skip } from "./types.ts";

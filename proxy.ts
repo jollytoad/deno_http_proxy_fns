@@ -1,4 +1,4 @@
-import { byPattern } from "https://deno.land/x/http_fns@v0.0.15/pattern.ts";
+import { byPattern } from "https://deno.land/x/http_fns@v0.0.16/pattern.ts";
 import { proxyViaRules } from "./via_rules.ts";
 import { getRoles } from "./roles.ts";
 import { getAuditor } from "./auditor.ts";

@@ -1,4 +1,4 @@
-import type { RoutePattern } from "https://deno.land/x/http_fns@v0.0.15/types.ts";
+import type { RoutePattern } from "https://deno.land/x/http_fns@v0.0.16/types.ts";
 import type { HttpMethod, Role, RouteMethod, RouteRule } from "../types.ts";
 import { intersect } from "https://deno.land/std@0.192.0/collections/intersect.ts";
 
