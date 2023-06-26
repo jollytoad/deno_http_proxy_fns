@@ -1,5 +1,6 @@
 {
   "tasks": {
+    "demo": "deno run --allow-net --allow-env --allow-read ./demo/main.ts",
     "check": "deno fmt && deno lint && deno check **/*.ts"
   }
 }
