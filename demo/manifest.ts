@@ -1,5 +1,5 @@
-import type { Manifest } from "https://deno.land/x/http_proxy_fns@v0.0.2/types.ts";
-import audit_log from "https://deno.land/x/http_proxy_fns@v0.0.2/audit/console_log.ts";
+import type { Manifest } from "../types.ts";
+import audit_log from "../audit/console_log.ts";
 
 export default {
   // The base URL of the target API

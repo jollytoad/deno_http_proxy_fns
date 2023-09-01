@@ -1,5 +1,8 @@
 import type { AuditProps } from "../types.ts";
 
+/**
+ * Auditor that logs entries to the console.
+ */
 export default (props: AuditProps) => {
   console.debug(
     `%c${props.kind} rule: "${

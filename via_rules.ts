@@ -1,8 +1,8 @@
-import { byPattern } from "https://deno.land/x/http_fns@v0.0.16/pattern.ts";
-import { forbidden } from "https://deno.land/x/http_fns@v0.0.16/response.ts";
+import { byPattern } from "https://deno.land/x/http_fns@v0.0.27/pattern.ts";
+import { forbidden } from "https://deno.land/x/http_fns@v0.0.27/response/forbidden.ts";
 import { subHeaders } from "./_internal/substitute.ts";
 import { methodApplies, roleApplies } from "./_internal/match.ts";
-import type { Auditor, Role, RouteRule, Skip } from "./types.ts";
+import type { Auditor, Role, RouteRule } from "./types.ts";
 
 /**
  * Proxy the mapped request according to the rules of the manifest.
@@ -12,7 +12,7 @@ export async function proxyViaRules(
   rules: RouteRule[],
   roles: Role[],
   auditor?: Auditor,
-): Promise<Response | Skip> {
+): Promise<Response | null> {
   for (const rule of rules) {
     const res = await proxyViaRule(req, rule, roles, auditor);
     if (res) {
@@ -28,7 +28,7 @@ async function proxyViaRule(
   rule: RouteRule,
   roles: Role[],
   auditor?: Auditor,
-): Promise<Response | Skip> {
+): Promise<Response | null> {
   if (methodApplies(rule.method, req) && roleApplies(rule, roles)) {
     return await byPattern(rule.pattern ?? "*", handler(rule, roles, auditor))(
       req,

@@ -6,6 +6,14 @@ import type {
   RolesProviderSpec,
 } from "./types.ts";
 
+/**
+ * Get the roles of the incoming Request according to the Manifest.
+ *
+ * @param req the incoming Request
+ * @param manifest the proxy Manifest
+ * @param wildcard should a `*` wildcard be added to the returned roles
+ * @returns an array of role names
+ */
 export async function getRoles(
   req: Request,
   manifest: Manifest,
