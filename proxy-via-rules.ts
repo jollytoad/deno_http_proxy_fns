@@ -1,7 +1,7 @@
-import { byPattern } from "https://deno.land/x/http_fns@v0.0.27/pattern.ts";
-import { forbidden } from "https://deno.land/x/http_fns@v0.0.27/response/forbidden.ts";
-import { subHeaders } from "./_internal/substitute.ts";
-import { methodApplies, roleApplies } from "./_internal/match.ts";
+import { byPattern } from "@http/route/by-pattern";
+import { forbidden } from "@http/response/forbidden";
+import { subHeaders } from "./substitute.ts";
+import { methodApplies, roleApplies } from "./match.ts";
 import type { Auditor, Role, RouteRule } from "./types.ts";
 
 /**
@@ -77,13 +77,20 @@ async (
   let response: Response;
 
   function aborted(this: AbortSignal) {
-    if (auditor && auditProps) {
-      auditor({ kind: "aborted", ...auditProps, reason: this.reason });
+    if (auditor && auditProps && (!response || !response.bodyUsed)) {
+      auditor({
+        kind: "aborted",
+        ...auditProps,
+        response,
+        reason: this.reason,
+      });
     }
   }
 
   try {
-    outgoingRequest.signal.addEventListener("abort", aborted, { once: true });
+    if (auditor && auditProps) {
+      outgoingRequest.signal.addEventListener("abort", aborted, { once: true });
+    }
 
     response = await fetch(outgoingRequest);
   } catch (error) {

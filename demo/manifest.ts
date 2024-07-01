@@ -1,5 +1,5 @@
 import type { Manifest } from "../types.ts";
-import audit_log from "../audit/console_log.ts";
+import auditConsole from "../auditor/console.ts";
 
 export default {
   // The base URL of the target API
@@ -28,7 +28,7 @@ export default {
       "kind": ["denied", "error", "aborted"],
 
       // The Auditor function, may also be a dynamic module or service (like roles provider)
-      "fn": audit_log,
+      "fn": auditConsole,
 
       // Example of loading the same auditor via a dynamic module:
       //"module": "https://deno.land/x/http_proxy_fns@v0.0.2/audit/console_log.ts",

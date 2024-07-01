@@ -1,7 +1,32 @@
 {
+  "name": "@http/proxy",
+  "version": "0.1.0",
   "tasks": {
-    "demo": "deno run --allow-net --allow-env --allow-read ./demo/main.ts",
-    "check": "deno fmt && deno lint && deno check **/*.ts",
-    "lock": "rm -f deno.lock && deno check demo/main.ts"
+    "demo": "deno run --allow-net --allow-env --allow-read --watch ./demo/main.ts",
+    "check": "deno check **/*.ts",
+    "ok": "deno fmt && deno lint && deno task check && deno publish --dry-run --allow-dirty",
+    "lock": "rm -f deno.lock && deno task check",
+    "outdated": "deno run --allow-read=. --allow-net=jsr.io,registry.npmjs.org jsr:@check/deps"
+  },
+  "exports": {
+    "./proxy-route": "./proxy-route.ts",
+    "./proxy-via-rules": "./proxy-via-rules.ts",
+    "./determine-roles": "./determine-roles.ts",
+    "./create-auditor": "./create-auditor.ts",
+    "./auditor/console": "./auditor/console.ts",
+    "./types": "./types.ts"
+  },
+  "imports": {
+    "@http/response": "jsr:@http/response@^0.18.0",
+    "@http/route": "jsr:@http/route@^0.18.0",
+    "@std/collections": "jsr:@std/collections@^1.0.1",
+    "@std/dotenv": "jsr:@std/dotenv@^0.224.1"
+  },
+  "publish": {
+    "exclude": [
+      ".vscode",
+      "demo",
+      "deno.lock"
+    ]
   }
 }

@@ -1,16 +1,20 @@
-import { methodApplies, patternApplies } from "./_internal/match.ts";
-import { subRef } from "./_internal/substitute.ts";
+import { methodApplies, patternApplies } from "./match.ts";
+import { subRef } from "./substitute.ts";
 import type {
   AuditKind,
   Auditor,
-  AuditorFnSpec,
+  AuditorChainFn,
   AuditorSpec,
   AuditProps,
   Manifest,
+  PluggableFn,
 } from "./types.ts";
 
+/**
+ * Create an {@linkcode Auditor} from the declarations in the {@linkcode Manifest}
+ */
 // deno-lint-ignore require-await
-export async function getAuditor(
+export async function createAuditor(
   _req: Request,
   manifest: Manifest,
 ): Promise<Auditor> {
@@ -45,7 +49,7 @@ async function resolveAuditor(
 ): Promise<Auditor> {
   let fn: Auditor | undefined;
 
-  if (auditorSpec && (!auditorSpec.kind || auditorSpec.kind.includes(kind))) {
+  if (auditorSpec && kindApplies(auditorSpec.kind, kind)) {
     fn = await resolveAuditorChain(auditorSpec);
 
     if (fn && auditorSpec?.method) {
@@ -78,10 +82,19 @@ async function resolveAuditor(
   return fn ?? noOp;
 }
 
+function kindApplies(
+  kindSpec: AuditKind | AuditKind[] | "*" = "*",
+  kind: AuditKind,
+) {
+  return kindSpec === "*" || (
+    typeof kindSpec === "string" ? kindSpec === kind : kindSpec.includes(kind)
+  );
+}
+
 async function resolveAuditorChain(
   auditorSpec: AuditorSpec,
 ): Promise<Auditor | undefined> {
-  const chain: (AuditorFnSpec | Auditor)[] = [
+  const chain: AuditorChainFn[] = [
     ...auditorSpec.chain ?? [],
     auditorSpec,
   ];
@@ -107,7 +120,7 @@ async function resolveAuditorChain(
 }
 
 async function resolveAuditorFn(
-  fnSpec: AuditorFnSpec | Auditor,
+  fnSpec: PluggableFn<Auditor> | Auditor,
 ): Promise<Auditor | undefined> {
   let fn: Auditor | undefined;
 

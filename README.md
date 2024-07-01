@@ -1,10 +1,10 @@
-# deno_http_proxy_fns
+# HTTP Proxy functions
 
 NOTE: This is still fairly experimental.
 
 A collection of functions for creating a HTTP proxy via a set of rules.
 
-Accompanies [http_fns](https://deno.land/x/http_fns), but could be used with any
+Accompanies [@http functions](https://jsr.io/@http), but could be used with any
 Deno server/router based on the standard Request/Response functions.
 
 - Configured via a single `Manifest` (JSON or TypeScript module).

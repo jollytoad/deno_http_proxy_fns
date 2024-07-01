@@ -1,4 +1,4 @@
-import { subRef, subValues } from "./_internal/substitute.ts";
+import { subRef, subValues } from "./substitute.ts";
 import type {
   Manifest,
   Role,
@@ -7,14 +7,14 @@ import type {
 } from "./types.ts";
 
 /**
- * Get the roles of the incoming Request according to the Manifest.
+ * Determine the roles of the incoming Request according to the Manifest.
  *
  * @param req the incoming Request
  * @param manifest the proxy Manifest
  * @param wildcard should a `*` wildcard be added to the returned roles
  * @returns an array of role names
  */
-export async function getRoles(
+export async function determineRoles(
   req: Request,
   manifest: Manifest,
   wildcard = true,

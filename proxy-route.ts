@@ -1,19 +1,23 @@
-import { byPattern } from "https://deno.land/x/http_fns@v0.0.27/pattern.ts";
-import { proxyViaRules } from "./via_rules.ts";
-import { getRoles } from "./roles.ts";
-import { getAuditor } from "./auditor.ts";
+import { byPattern } from "@http/route/by-pattern";
+import { proxyViaRules } from "./proxy-via-rules.ts";
+import { determineRoles } from "./determine-roles.ts";
+import { createAuditor } from "./create-auditor.ts";
 import type { Manifest } from "./types.ts";
+import type { Awaitable } from "@http/route/types";
 
 /**
  * Create a proxy route that forwards requests according to the rules of the given manifest.
  */
-export function proxyRoute(pattern: string, manifest: Manifest) {
+export function proxyRoute(
+  pattern: string,
+  manifest: Manifest,
+): (req: Request) => Awaitable<Response | null> {
   return byPattern(
     `${pattern === "/" ? "" : pattern}/:path*`,
     async function (req, info) {
       const [roles, auditor] = await Promise.all([
-        getRoles(req, manifest),
-        getAuditor(req, manifest),
+        determineRoles(req, manifest),
+        createAuditor(req, manifest),
       ]);
 
       const incomingUrl = new URL(req.url);
