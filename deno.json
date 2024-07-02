@@ -1,6 +1,6 @@
 {
   "name": "@http/proxy",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "tasks": {
     "demo": "deno run --allow-net --allow-env --allow-read --watch ./demo/main.ts",
     "check": "deno check **/*.ts",
@@ -9,6 +9,7 @@
     "outdated": "deno run --allow-read=. --allow-net=jsr.io,registry.npmjs.org jsr:@check/deps"
   },
   "exports": {
+    ".": "./mod.ts",
     "./proxy-route": "./proxy-route.ts",
     "./proxy-via-rules": "./proxy-via-rules.ts",
     "./determine-roles": "./determine-roles.ts",
@@ -25,7 +26,6 @@
   "publish": {
     "exclude": [
       ".vscode",
-      "demo",
       "deno.lock"
     ]
   }
